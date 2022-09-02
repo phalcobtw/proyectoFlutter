@@ -6,7 +6,7 @@ void main() {
   blocTest<ClaseBloc, EstadoVerificacion>(
     'emits [MyState] when MyEvent is added.',
     build: () => ClaseBloc(),
-    act: (bloc) => bloc.add(Creo()),
+    act: (bloc) => bloc.add(Creado()),
     expect: () => const [isA<SolicitandoNombre>],
   );
 }

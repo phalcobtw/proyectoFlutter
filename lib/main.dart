@@ -17,7 +17,7 @@ class AplicacionInyectada extends StatelessWidget {
       create: (context) {
         ClaseBloc blocVerificacion=ClaseBloc();
         Future.delayed(Duration(seconds: 2),(){
-          blocVerificacion.add(Creo());
+          blocVerificacion.add(Creado());
         });
         return blocVerificacion;
       },
