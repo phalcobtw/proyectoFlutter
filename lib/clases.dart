@@ -28,7 +28,7 @@ class MostrarNombre extends EstadoVerificacion{}
 class ClaseBloc extends Bloc<EventoVerificacion, EstadoVerificacion> {
   ClaseBloc() : super(Creandose()) {
     on<Creado>((event, emit) {
-      // TODO: implement event handler
+      emit (SolicitandoNombre());
     });
   }
 }
