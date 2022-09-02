@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Aplicacion extends StatelessWidget {
-  const Aplicacion({super.key});
+class VistaCreandose extends StatelessWidget {
+  const VistaCreandose({super.key});
 
   @override
   Widget build(BuildContext context) {
