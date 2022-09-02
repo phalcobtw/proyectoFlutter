@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/vista_creandose.dart';
 
 void main() {
   //runApp(const MyApp());
+  runApp(const Aplicacion());
 }
 
-class MyApp extends StatelessWidget {
+/* class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
@@ -64,4 +66,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ), 
     );
   }
-}
+} */
