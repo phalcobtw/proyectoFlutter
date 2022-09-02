@@ -1,69 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/clases.dart';
 import 'package:flutter_application_1/vista_creandose.dart';
+import 'package:flutter_application_1/vista_esperando_nombre.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   //runApp(const MyApp());
-  runApp(const Aplicacion());
+  runApp(const AplicacionInyectada());
+}
+class AplicacionInyectada extends StatelessWidget {
+  const AplicacionInyectada({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) {
+        ClaseBloc blocVerificacion=ClaseBloc();
+        Future.delayed(Duration(seconds: 2),(){
+          blocVerificacion.add(Creo());
+        });
+        return blocVerificacion;
+      },
+      child: const Aplicacion(),
+    );
+  }
 }
 
-/* class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Aplicacion extends StatelessWidget {
+  const Aplicacion({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
+      home:Scaffold(
+        body: Builder(builder: (context){
+          var estado = context.watch<ClaseBloc>().state;
+          if(estado is Creandose){
+            return VistaCreandose();
+          }
+          if(estado is SolicitandoNombre){
+            return VistaSolicitandoNombre();
+          }
+          return const Center(child: Text('Si estas viendo esto algo salio mal, HUYE'));
+
+        }),
+      )
     );
   }
 }
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), 
-    );
-  }
-} */
