@@ -53,7 +53,7 @@ class _VistaSolicitandoNombreSTFState extends State<VistaSolicitandoNombreSTF> {
         TextButton(onPressed: isButtonActive ? () {
           setState(() => isButtonActive = false,);
           controller.clear();
-        }:null, child: Text('Algo debe decir aqui'))
+        }:null, child: Text('Siguiente'))
       ],
     );
   }
