@@ -25,7 +25,7 @@ class VistaSolicitandoNombreSTF extends StatefulWidget {
 }
 
 class _VistaSolicitandoNombreSTFState extends State<VistaSolicitandoNombreSTF> {
-  bool isButtonActive = true;
+  bool isButtonActive = false;
   late TextEditingController controller;
   @override
   void initState(){
