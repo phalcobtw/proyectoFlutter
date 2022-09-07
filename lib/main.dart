@@ -40,7 +40,7 @@ class Aplicacion extends StatelessWidget {
             return VistaCreandose();
           }
           if(estado is SolicitandoNombre){
-            return VistaSolicitandoNombre();
+            return VistaSolicitandoNombreSTF();
           }
           return const Center(child: Text('Si estas viendo esto algo salio mal, HUYE'));
 
