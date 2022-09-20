@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './caracteristicas/verificacion/vistas/repositorio_verificacion.dart';
 
 class VistaSolicitandoNombre extends StatelessWidget {
   const VistaSolicitandoNombre({Key? key}) : super(key: key);

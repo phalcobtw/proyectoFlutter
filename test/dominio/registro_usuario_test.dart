@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_application_1/caracteristicas/verificacion/vistas/repositorio_verificacion.dart';
 import 'package:flutter_application_1/dominio/nick_formado.dart';
+import 'package:flutter_application_1/dominio/problemas.dart';
 import 'package:flutter_application_1/dominio/registro_usuario.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
@@ -11,7 +12,7 @@ void main() {
     test('Con benthor me regresa valor', (){
       RepositorioPruebasVerificacion repositorio =
       RepositorioPruebasVerificacion();
-      var resultado = repositorio.obtenerRegistroUsuario(NickFormado('Benthor'));
+      var resultado = repositorio.obtenerRegistroUsuario(NickFormado.constructor('Benthor'));
       resultado.match(
         (l){
           expect(false, equals(true));
@@ -26,9 +27,9 @@ void main() {
       );
     });
     test('Con amlo me regresa error', (){
-RepositorioPruebasVerificacion repositorio =
+      RepositorioPruebasVerificacion repositorio =
       RepositorioPruebasVerificacion();
-      var resultado = repositorio.obtenerRegistroUsuario(NickFormado('amlo'));
+      var resultado = repositorio.obtenerRegistroUsuario(NickFormado.constructor('amlo'));
       resultado.match(
         (l){
           expect(true, equals(true));
@@ -37,7 +38,17 @@ RepositorioPruebasVerificacion repositorio =
           expect(true, equals(false));
         })
       );
-
+    });
+    test('con xml incorrecto', () {
+      RepositorioPruebasVerificacion repositorio =
+      RepositorioPruebasVerificacion();
+      var resultado = repositorio.obtenerRegistroUsuario(NickFormado.constructor('incorrecto'));
+      resultado.match((l) { 
+        expect(l, isA<VersionIncorrectaXml>());
+      }, 
+      (r) {
+        assert(false);
+      });
     });
   });
 }
