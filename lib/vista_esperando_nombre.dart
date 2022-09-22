@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/clases.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import './caracteristicas/verificacion/vistas/repositorio_verificacion.dart';
 
 class VistaSolicitandoNombre extends StatelessWidget {
@@ -43,6 +45,7 @@ class _VistaSolicitandoNombreSTFState extends State<VistaSolicitandoNombreSTF> {
     controller.dispose();
     super.dispose();
   }
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,6 +56,8 @@ class _VistaSolicitandoNombreSTFState extends State<VistaSolicitandoNombreSTF> {
         ),
         TextButton(onPressed: isButtonActive ? () {
           setState(() => isButtonActive = false,);
+          var bloc = context.read<ClaseBloc>();
+          bloc.add(NombreRecibido(controller.text));
           controller.clear();
         }:null, child: Text('Siguiente'))
       ],

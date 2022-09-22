@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clases.dart';
 import 'package:flutter_application_1/vista_creandose.dart';
 import 'package:flutter_application_1/vista_esperando_nombre.dart';
+import 'package:flutter_application_1/vista_mostrandobusqueda.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
@@ -41,6 +42,12 @@ class Aplicacion extends StatelessWidget {
           }
           if(estado is SolicitandoNombre){
             return VistaSolicitandoNombreSTF();
+          }
+          if (estado is MostrarNombre) {
+            return VistaMostrandoBusqueda(mensaje: estado.mensaje);
+          }
+          if (estado is MostrarNombreNoConfirmado) {
+            return VistaMostrandoBusqueda(mensaje: estado.mensaje);
           }
           return const Center(child: Text('Si estas viendo esto algo salio mal, HUYE'));
 
