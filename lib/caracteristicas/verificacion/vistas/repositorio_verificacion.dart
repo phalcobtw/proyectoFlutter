@@ -4,13 +4,13 @@ import 'package:flutter_application_1/dominio/registro_usuario.dart';
 import 'package:xml/xml.dart';
 import 'package:fpdart/fpdart.dart';
 
-abstract class RepositorioVerificacion{
-  Either<Problema,RegistroUsuario> obtenerRegistroUsuario(NickFormado nick);
+abstract class RepositorioVerificacion {
+  Either<Problema, RegistroUsuario> obtenerRegistroUsuario(NickFormado nick);
 }
 
-class RepositorioPruebasVerificacion extends RepositorioVerificacion{
+class RepositorioPruebasVerificacion extends RepositorioVerificacion {
   @override
-    final String benthor = """<?xml version="1.0" encoding="utf-8"?>
+  final String benthor = """<?xml version="1.0" encoding="utf-8"?>
     <user id="597373" name="benthor" termsofuse="https://boardgamegeek.com/xmlapi/termsofuse">
 		<firstname value="Benthor" />		
     <lastname value="Benthor" />			
@@ -27,7 +27,7 @@ class RepositorioPruebasVerificacion extends RepositorioVerificacion{
     <steamaccount value="" />			
     <traderating value="0" />	
 				</user>""";
-        final _amlo = """<?xml version="1.0" encoding="utf-8"?>
+  final _amlo = """<?xml version="1.0" encoding="utf-8"?>
         <user id="" name="" termsofuse="https://boardgamegeek.com/xmlapi/termsofuse">
 				<firstname value="" />			
         <lastname value="" />			
@@ -44,7 +44,7 @@ class RepositorioPruebasVerificacion extends RepositorioVerificacion{
         <steamaccount value="" />			
         <traderating value="362" />	
 				</user>""";
-        final _incorrecto = """<?xml version="1.0" encoding="utf-8"?>
+  final _incorrecto = """<?xml version="1.0" encoding="utf-8"?>
         <user id="" name="" termsofuse="https://boardgamegeek.com/xmlapi/termsofuse">
 				<firstname value="" />			
         <lastname value="" />			
@@ -61,57 +61,84 @@ class RepositorioPruebasVerificacion extends RepositorioVerificacion{
         <steamaccount value="" />			
         <traderating value="362" />	
 				</user>""";
-        final campoNombre = 'firstname';
-        final campoPais = 'country';
-        final campoEstado = 'stateorprovince';
-        final campoApellido = 'lastname';
-        final campoAnio = 'yearregistered';
-        
-        @override
-        Either<Problema,RegistroUsuario> obtenerRegistroUsuarioDesdeXml(XmlDocument documento){
-          
-          final nodo = documento.findAllElements(campoAnio);
-          /* final String valor = obtenerValorCampo(documento, campoAnio);
-          if (valor.isEmpty) {
-            return Left(UsuarioNoRegistrado());
-          } */
-          Either<Problema,String> anioRegistrado = obtenerValorCampo(documento, campoAnio);
-          Either<Problema,String> nombre = obtenerValorCampo(documento, campoNombre);
-          Either<Problema,String> pais = obtenerValorCampo(documento, campoPais);
-          Either<Problema,String> estado = obtenerValorCampo(documento, campoEstado);
-          Either<Problema,String> apellidos = obtenerValorCampo(documento, campoApellido);
-          if ([anioRegistrado, nombre, pais, estado, apellidos].any((element) => element.isLeft())) {
-            return Left(VersionIncorrectaXml());
-            
-          }
-          final valoresRegistro = [anioRegistrado,apellidos,estado,nombre,pais].map((e) => e.getOrElse((l) => '')).toList();
-          if (valoresRegistro[0].isEmpty) {
-            return Left(UsuarioNoRegistrado());
-          }
-            return Right(RegistroUsuario.constructor(propuestaAnio: valoresRegistro[0],
-            propuestaApellidos: valoresRegistro[1], 
-            propuestaEstado: valoresRegistro[2], 
-            propuestaNombre: valoresRegistro[3], 
-            propuestaPais: valoresRegistro[4]));
+  final campoNombre = 'firstname';
+  final campoPais = 'country';
+  final campoEstado = 'stateorprovince';
+  final campoApellido = 'lastname';
+  final campoAnio = 'yearregistered';
+  final fechaPartida = 'date';
 
-           
+
+  @override
+  Either<Problema, RegistroUsuario> obtenerRegistroUsuarioDesdeXml(
+      XmlDocument documento) {
+    final nodo = documento.findAllElements(campoAnio);
+    Either<Problema, String> anioRegistrado = obtenerValorCampo(documento, campoAnio);
+    Either<Problema, String> nombre = obtenerValorCampo(documento, campoNombre);
+    Either<Problema, String> pais = obtenerValorCampo(documento, campoPais);
+    Either<Problema, String> estado = obtenerValorCampo(documento, campoEstado);
+    Either<Problema, String> apellidos = obtenerValorCampo(documento, campoApellido);
+    if ([anioRegistrado, nombre, pais, estado, apellidos]
+        .any((element) => element.isLeft())) {
+      return Left(VersionIncorrectaXml());
+    }
+    final valoresRegistro = [anioRegistrado, apellidos, estado, nombre, pais]
+        .map((e) => e.getOrElse((l) => ''))
+        .toList();
+    if (valoresRegistro[0].isEmpty) {
+      return Left(UsuarioNoRegistrado());
+    }
+    return Right(RegistroUsuario.constructor(
+        propuestaAnio: valoresRegistro[0],
+        propuestaApellidos: valoresRegistro[1],
+        propuestaEstado: valoresRegistro[2],
+        propuestaNombre: valoresRegistro[3],
+        propuestaPais: valoresRegistro[4]));
   }
-  /* String obtenerValorCampo(XmlDocument documento, String campo){
-    final campoValor = 'value';
-    return documento.findAllElements(campo).first.getAttribute(campoValor) ?? '';
+  Either<Problema, RegistroUsuario> obtenerRegistroUsuarioDesdeXmlPartidas(XmlDocument documento, XmlDocument docpart) {
+    Either<Problema, String> anioRegistrado = obtenerValorCampo(documento, campoAnio);
+    Either<Problema, String> nombre = obtenerValorCampo(documento, campoNombre);
+    Either<Problema, String> pais = obtenerValorCampo(documento, campoPais);
+    Either<Problema, String> estado = obtenerValorCampo(documento, campoEstado);
+    Either<Problema, String> apellidos = obtenerValorCampo(documento, campoApellido);
+    //Either<Problema, List> nombreJ = obtenerValorPartidas(documento, nombreJuego);
+    if ([anioRegistrado, nombre, pais, estado, apellidos].any((element) => element.isLeft())) {
+      return Left(VersionIncorrectaXml());
+    }
+    final valoresRegistro = [anioRegistrado, apellidos, estado, nombre, pais].map((e) => e.getOrElse((l) => '')).toList();
+    if (valoresRegistro[0].isEmpty) {
+      return Left(UsuarioNoRegistrado());
+    }
+    return Right(RegistroUsuario.constructor(
+        propuestaAnio: valoresRegistro[0],
+        propuestaApellidos: valoresRegistro[1],
+        propuestaEstado: valoresRegistro[2],
+        propuestaNombre: valoresRegistro[3],
+        propuestaPais: valoresRegistro[4]));
+  }
 
-  } */
-  Either<Problema,String> obtenerValorCampo(XmlDocument documento, String campo){
+  Either<Problema, String> obtenerValorCampo(
+      XmlDocument documento, String campo) {
     const campoValor = 'value';
     final valoresEncontrados = documento.findAllElements(campo);
     if (valoresEncontrados.isEmpty) return Left(VersionIncorrectaXml());
     final String? valorARegresar = valoresEncontrados.first.getAttribute(campoValor);
-    if (valorARegresar== null) {
+    if (valorARegresar == null) {
       return Left(VersionIncorrectaXml());
     }
     return Right(valorARegresar);
   }
-  
+
+  Either<Problema, List> obtenerValorPartidas(XmlDocument documento, String campo){
+    final valoresEncontrados = documento.findAllElements(campo);
+    if (valoresEncontrados.isEmpty) return Left(VersionIncorrectaXml());
+    final listaValores = [];
+    for (var i = 0; i < valoresEncontrados.length; i++) {
+      listaValores[i] = valoresEncontrados.first.getAttribute(campo) ?? "";
+    }
+    return Right(listaValores);
+  }
+
   @override
   Either<Problema, RegistroUsuario> obtenerRegistroUsuario(NickFormado nick) {
     if (nick.valor == 'Benthor') {
@@ -128,5 +155,4 @@ class RepositorioPruebasVerificacion extends RepositorioVerificacion{
     }
     return Left(UsuarioNoRegistrado());
   }
-
 }
