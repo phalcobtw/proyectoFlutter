@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/dominio/nick_formado.dart';
 import 'package:flutter_application_1/dominio/problemas.dart';
+import 'package:flutter_application_1/dominio/registro_juego.dart';
 import 'package:flutter_application_1/dominio/registro_usuario.dart';
 import 'package:xml/xml.dart';
 import 'package:fpdart/fpdart.dart';
@@ -29,6 +30,18 @@ final partidas =
           </play>
           </plays>""";
   final nombreJuego = 'name';
-abstract class RepositorioVerificacion {
-  Either<Problema, RegistroUsuario> obtenerRegistroUsuario(NickFormado nick);
+abstract class RepositorioVerificacionJuego {
+  Either<Problema, RegistroJuego> obtenerRegistroJuego();
+}
+
+class RepositorioPruebasVerificacionJuego extends RepositorioVerificacionJuego{
+  @override
+  Either<Problema, RegistroJuego> obtenerRegistroJuego() {
+    
+    throw UnimplementedError();
+  }
+  List<String> obtenerRegistroJuegoDesdeXML(){
+
+  }
+
 }
