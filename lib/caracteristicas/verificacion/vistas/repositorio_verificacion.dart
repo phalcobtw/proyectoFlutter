@@ -95,7 +95,7 @@ class RepositorioPruebasVerificacion extends RepositorioVerificacion {
         propuestaNombre: valoresRegistro[3],
         propuestaPais: valoresRegistro[4]));
   }
-  Either<Problema, RegistroUsuario> obtenerRegistroUsuarioDesdeXmlPartidas(XmlDocument documento, XmlDocument docpart) {
+/*   Either<Problema, RegistroUsuario> obtenerRegistroUsuarioDesdeXmlPartidas(XmlDocument documento, XmlDocument docpart) {
     Either<Problema, String> anioRegistrado = obtenerValorCampo(documento, campoAnio);
     Either<Problema, String> nombre = obtenerValorCampo(documento, campoNombre);
     Either<Problema, String> pais = obtenerValorCampo(documento, campoPais);
@@ -115,7 +115,7 @@ class RepositorioPruebasVerificacion extends RepositorioVerificacion {
         propuestaEstado: valoresRegistro[2],
         propuestaNombre: valoresRegistro[3],
         propuestaPais: valoresRegistro[4]));
-  }
+  } */
 
   Either<Problema, String> obtenerValorCampo(
       XmlDocument documento, String campo) {

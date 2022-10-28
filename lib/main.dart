@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   //runApp(const MyApp());
-  runApp(const AplicacionInyectada());
+ // runApp(const AplicacionInyectada());
 }
 class AplicacionInyectada extends StatelessWidget {
   const AplicacionInyectada({Key? key}) : super(key: key);
