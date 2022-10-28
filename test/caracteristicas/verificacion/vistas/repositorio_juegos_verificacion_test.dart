@@ -5,14 +5,14 @@ import 'package:flutter_application_1/dominio/nick_formado.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('benthor 5 juegos', () async {
+  test('benthor 2 juegos', () async {
     RepositorioXmlPruebas repositorioPruebas = RepositorioXmlPruebas();
     RepositorioPruebasJuegosJugados repositorio = RepositorioPruebasJuegosJugados(repositorioPruebas);
     final resultado = await repositorio.obtenerJuegosJugados(NickFormado.constructor('benthor'));
     resultado.match((l) {
       expect(true, equals(false));
     }, (r) {
-      expect(r.length, equals(5));
+      expect(r.length, equals(2));
     });
   });
 
@@ -45,7 +45,7 @@ void main() {
     resultado.match((l) {
       expect(true, equals(false));
     }, (r) {
-      expect(r.length, equals(11));
+      expect(r.length, equals(6));
     });
   });
 }

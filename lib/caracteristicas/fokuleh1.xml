@@ -13,7 +13,7 @@
             <player username="Shammuk" userid="592933" name="Christian Solano" startposition="4" color="White" score="54" new="0" rating="0" win="0" />
         </players>
     </play>
-    <play id="64945178" date="2022-10-15" quantity="1" length="136" incomplete="0" nowinstats="0" location="Casa Club">
+	<play id="64945178" date="2022-10-15" quantity="1" length="136" incomplete="0" nowinstats="0" location="Casa Club">
         <item name="The Red Cathedral" objecttype="thing" objectid="227224">
             <subtypes>
                 <subtype value="boardgame" />

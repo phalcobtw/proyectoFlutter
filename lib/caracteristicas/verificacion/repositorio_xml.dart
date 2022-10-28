@@ -33,7 +33,7 @@ int _obtenerCuantasPaginasDesdeXml(String elXml) {
 List<String> _obtenerNombresPaginas(cuantasPaginas, NickFormado nick){
   final base = './lib/caracteristicas/${nick.valor}';
   List<String> lista = [];
-  for (var i = 1; i < cuantasPaginas; i++) {
+  for (var i = 1; i <= cuantasPaginas; i++) {
     lista.add('$base'+'$i'+'.xml');
   }
   return lista;
