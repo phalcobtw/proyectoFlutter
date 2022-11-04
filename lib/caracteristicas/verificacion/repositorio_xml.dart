@@ -5,9 +5,47 @@ import 'package:fpdart/fpdart.dart';
 import 'package:xml/xml.dart';
 
 import '../../dominio/problemas.dart';
+import 'package:http/http.dart' as http;
 
 abstract class RepositorioXml{
   Future<Either<Problema,List<String>>> obtenerXml(NickFormado nick);
+}
+
+class RepositorioXmlReal extends RepositorioXml{
+  @override
+  Future<Either<Problema, List<String>>> obtenerXml(NickFormado nick) async {
+    try {
+      final respuesta = await http.get(Uri.parse('https://boardgamegeek.com/xmlapi2/plays?username=${nick.valor}'));
+      String elXml = respuesta.body;
+      int cuantasPaginas = _obtenerCuantasPaginasDesdeXmlReal(elXml);
+      List<String> nombresPaginas = _obtenerNombresPaginas(cuantasPaginas, nick);
+      List<String> resultado = [];
+      for (var pagina in nombresPaginas) {
+        final requestpagina = await http.get(Uri.parse(pagina));
+        resultado.add(requestpagina.body);
+      }
+      return Right(resultado);
+    } catch (e) {
+      return Left(VersionIncorrectaXml());
+    }
+  }
+  List<String> _obtenerNombresPaginas(cuantasPaginas, NickFormado nick){
+    var base = 'https://boardgamegeek.com/xmlapi2/plays?username=${nick.valor}';
+    List<String> lista = [];
+    for (var i = 1; i <= cuantasPaginas; i++) {
+      lista.add(base+'&page='+'$i');
+    }
+    return lista;
+
+}
+
+  int _obtenerCuantasPaginasDesdeXmlReal(String xml){
+  XmlDocument documento = XmlDocument.parse(xml);
+  String cadenaNumero = documento.getElement('plays')!.getAttribute('total')!;
+  int numero = int.parse(cadenaNumero);
+  return (numero / 100).ceil();
+}
+
 }
 
 class RepositorioXmlPruebas extends RepositorioXml{
@@ -39,5 +77,6 @@ List<String> _obtenerNombresPaginas(cuantasPaginas, NickFormado nick){
   return lista;
 
 }
+
 }
 
