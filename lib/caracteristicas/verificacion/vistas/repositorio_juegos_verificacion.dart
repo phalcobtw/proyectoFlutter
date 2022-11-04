@@ -34,14 +34,9 @@ class RepositorioPruebasJuegosJugados extends RepositorioJuegosJugados {
     });
   }
 
- /*  String _obtenerXmlJugadasDeDisco({required String nombre}) {
-    return File('./lib/caracteristicas/benthor1.xml').readAsStringSync();
-  }
- */
   Either<Problema, Set<JuegoJugado>> _obtenerJuegosJugadosDesdeXml(
       List<String> elXml) {
     final resultado = elXml.map((e) => _obtenerUnSoloSet(e));
-    final conjuntoSets = [];
     if (resultado.any((element) => element is Problema)) {
       return Left(VersionIncorrectaXml());
     }
