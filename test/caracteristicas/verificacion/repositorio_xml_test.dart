@@ -19,4 +19,19 @@ void main() {
       expect(true, equals(false));
     }, (r) => expect(r.length, equals(3)));
   });
-  }
+test('fokuleh online', () async {
+  RepositorioXmlReal repositorio = RepositorioXmlReal();
+    final resultado = await repositorio.obtenerXml(NickFormado.constructor('fokuleh'));
+    resultado.match((l) {
+      expect(true, equals(false));
+    }, (r) => expect(r.length, equals(15)));
+});
+
+test('benthor online', () async {
+  RepositorioXmlReal repositorio = RepositorioXmlReal();
+    final resultado = await repositorio.obtenerXml(NickFormado.constructor('benthor'));
+    resultado.match((l) {
+      expect(true, equals(false));
+    }, (r) => expect(r.length, equals(18)));
+});
+}
