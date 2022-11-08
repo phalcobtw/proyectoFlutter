@@ -85,10 +85,18 @@ class ClaseBloc extends Bloc<EventoVerificacion, EstadoVerificacion> {
     on<NombreRecibido>(((event, emit) {
       String path = "";
       if (event.nombreAProcesar == 'benthor') {
-        path = File('./lib/caracteristicas/benthor.txt').readAsStringSync();
+        try {
+         path = File('./lib/caracteristicas/benthor.txt').readAsStringSync(); 
+        } catch (e) {
+          path = "juego1, 1\njuego2, 2";
+        }
       }
       if (event.nombreAProcesar == 'fokuleh') {
-        path = File('./lib/caracteristicas/fokuleh.txt').readAsStringSync();
+        try {
+         path = File('./lib/caracteristicas/fokuleh.txt').readAsStringSync(); 
+        } catch (e) {
+          path = "juego1, 1\njuego2, 2";
+        }
       }
       Set<JuegoJugado> setJuegos = {};
       for (var juego in path.split('\n')) {
