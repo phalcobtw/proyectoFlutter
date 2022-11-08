@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_application_1/caracteristicas/verificacion/repositorio_xml.dart';
 import 'package:flutter_application_1/caracteristicas/verificacion/vistas/repositorio_juegos_verificacion.dart';
 import 'package:flutter_application_1/dominio/juego_jugado.dart';
@@ -46,6 +48,25 @@ void main() {
       expect(true, equals(false));
     }, (r) {
       expect(r.length, equals(6));
+    });
+  });
+
+  test('generar txt benthor', () async {
+    RepositorioXmlReal repositorioXml = RepositorioXmlReal();
+    RepositorioPruebasJuegosJugados repositorio = RepositorioPruebasJuegosJugados(repositorioXml);
+    const nombre = "benthor";
+    final resultado = await repositorio.obtenerJuegosJugados(NickFormado.constructor(nombre));
+    resultado.match((l) {
+      expect(true, equals(false));
+    }, (r) {
+      String path = "./lib/caracteristicas/$nombre.txt";
+      String datos = "";
+      for (JuegoJugado juegos in r) {
+        datos = "$datos${juegos.nombre} - ${juegos.id}\n";
+      }
+      var file = File(path);
+      var escribir = file.openWrite();
+      escribir.write(datos);
     });
   });
 }
