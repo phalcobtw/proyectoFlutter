@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter_application_1/caracteristicas/verificacion/vistas/repositorio_verificacion.dart';
 import 'package:flutter_application_1/dominio/nick_formado.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'dominio/juego_jugado.dart';
 import 'dominio/problemas.dart';
 
 class EventoVerificacion{}
@@ -14,6 +17,12 @@ class NombreRecibido extends EventoVerificacion{
 }
 
 class NombreConfirmado extends EventoVerificacion{}
+
+class JuegosRecibidos extends EventoVerificacion {
+  final String nombre;
+
+  JuegosRecibidos(this.nombre);
+}
 
 
 
@@ -45,6 +54,14 @@ class MostrarNombre extends EstadoVerificacion{
     "Año: " + anio.toString();
   }
 }
+
+class MostrarJuegos extends EstadoVerificacion {
+  final Set<JuegoJugado> setJuegos;
+  final String nombre;
+
+  MostrarJuegos(this.setJuegos, this.nombre);
+}
+
 class MostrarNombreNoConfirmado extends EstadoVerificacion{
   final Problema problema;
   late String mensaje = "";
@@ -66,9 +83,22 @@ class ClaseBloc extends Bloc<EventoVerificacion, EstadoVerificacion> {
       emit (SolicitandoNombre());
     });
     on<NombreRecibido>(((event, emit) {
-      RepositorioPruebasVerificacion repositorio = RepositorioPruebasVerificacion();
-      var estadoUsuario = repositorio.obtenerRegistroUsuario(NickFormado.constructor(event.nombreAProcesar));
-      estadoUsuario.match((l) => emit(MostrarNombreNoConfirmado(l)), (r) => emit(MostrarNombre(r.nombre,r.pais,r.apellidos,r.estado,r.anioRegistro)));
+      String path = "";
+      if (event.nombreAProcesar == 'benthor') {
+        path = File('./lib/caracteristicas/benthor.txt').readAsStringSync();
+      }
+      if (event.nombreAProcesar == 'fokuleh') {
+        path = File('./lib/caracteristicas/fokuleh.txt').readAsStringSync();
+      }
+      Set<JuegoJugado> setJuegos = {};
+      for (var juego in path.split('\n')) {
+        if (juego != "") {
+          String nombreJuego = juego.split(' - ')[0];
+          String id = juego.split(' - ')[1];
+          setJuegos.add(JuegoJugado.constructor(nombrePropuesto: nombreJuego, idPropuesto: id));
+        }
+      }
+      emit(MostrarJuegos(setJuegos, event.nombreAProcesar));
     }));
   }
 }
