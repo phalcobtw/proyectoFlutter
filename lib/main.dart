@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clases.dart';
 import 'package:flutter_application_1/vista_creandose.dart';
 import 'package:flutter_application_1/vista_esperando_nombre.dart';
+import 'package:flutter_application_1/vista_listajuegos.dart';
 import 'package:flutter_application_1/vista_mostrandobusqueda.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   //runApp(const MyApp());
- // runApp(const AplicacionInyectada());
+ runApp(const AplicacionInyectada());
 }
 class AplicacionInyectada extends StatelessWidget {
   const AplicacionInyectada({Key? key}) : super(key: key);
@@ -48,6 +49,9 @@ class Aplicacion extends StatelessWidget {
           }
           if (estado is MostrarNombreNoConfirmado) {
             return VistaMostrandoBusqueda(mensaje: estado.mensaje);
+          }
+          if (estado is MostrarJuegos) {
+              return VistaListaJuegos(setJuegos: estado.setJuegos, nombre: estado.nombre);
           }
           return const Center(child: Text('Si estas viendo esto algo salio mal, HUYE'));
 
