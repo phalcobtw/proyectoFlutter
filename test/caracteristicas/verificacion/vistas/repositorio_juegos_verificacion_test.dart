@@ -54,7 +54,7 @@ void main() {
   test('generar txt benthor', () async {
     RepositorioXmlReal repositorioXml = RepositorioXmlReal();
     RepositorioPruebasJuegosJugados repositorio = RepositorioPruebasJuegosJugados(repositorioXml);
-    const nombre = "benthor";
+    const nombre = "fokuleh";
     final resultado = await repositorio.obtenerJuegosJugados(NickFormado.constructor(nombre));
     resultado.match((l) {
       expect(true, equals(false));
