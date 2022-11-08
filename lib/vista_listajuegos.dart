@@ -33,7 +33,7 @@ class VistaListaJuegos extends StatelessWidget {
         FloatingActionButton(
           onPressed: () {
             var bloc = context.read<ClaseBloc>();
-            bloc.add(NombreRecibido(nombre));
+            bloc.add(Creado());
           },
           child: const Text('Regresar'),
         )
