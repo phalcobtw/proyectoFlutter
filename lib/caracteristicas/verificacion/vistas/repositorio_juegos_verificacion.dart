@@ -25,7 +25,7 @@ class RepositorioPruebasJuegosJugados extends RepositorioJuegosJugados {
   
   @override
   Future<Either<Problema, Set<JuegoJugado>>> obtenerJuegosJugados(NickFormado nick) async {
-    final Either<Problema,List<String>> resultadoXml = await super.repositorio.obtenerXml(nick);
+    Either<Problema,List<String>> resultadoXml = await super.repositorio.obtenerXml(nick);
     return resultadoXml.match((l) {
       return Left(l);
     }, (r) {
@@ -41,10 +41,6 @@ class RepositorioPruebasJuegosJugados extends RepositorioJuegosJugados {
       return Left(VersionIncorrectaXml());
     }
     final soloSets = resultado.map((e) => e.getOrElse((l) => {}));
-    /* Set<JuegoJugado> conjunto = {};
-    soloSets.forEach((element) {
-      conjunto.addAll(element.toList());
-    }); */
     final conjunto = soloSets.fold<Set<JuegoJugado>>({}, (p, a) => p..addAll(a.toList()));
     return Right(conjunto);
     
