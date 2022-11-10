@@ -79,6 +79,8 @@ class MostrarNombreNoConfirmado extends EstadoVerificacion{
 }
 class MostrarImagen extends EstadoVerificacion{
   String url = "";
+
+  MostrarImagen(this.url);
 }
 
 //Bloc
@@ -117,7 +119,7 @@ class ClaseBloc extends Bloc<EventoVerificacion, EstadoVerificacion> {
     on<ImagenRecibida>((event, emit) {
      RepositorioImagenPruebas repositorioImg = RepositorioImagenPruebas();
      var resultadoImg = repositorioImg.obtenerImagenJuego();
-     resultadoImg.match((l) => null, (r) => emit(MostrarImagen())); 
+     resultadoImg.match((l) => null, (r) => emit(MostrarImagen(r))); 
     });
   }
 }

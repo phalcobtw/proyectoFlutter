@@ -18,7 +18,7 @@ class VistaImagenes extends StatelessWidget {
           /* CircleAvatar(
             backgroundImage: CachedNetworkImageProvider(url),
           ), */
-          CachedNetworkImage(imageUrl: url),
+          CachedNetworkImage(imageUrl: url.toString()),
           TextButton(onPressed: (){
             var bloc = context.read<ClaseBloc>();
             bloc.add(Creado());
