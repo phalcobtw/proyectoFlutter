@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clases.dart';
 import 'package:flutter_application_1/vista_creandose.dart';
 import 'package:flutter_application_1/vista_esperando_nombre.dart';
+import 'package:flutter_application_1/vista_imagenes.dart';
 import 'package:flutter_application_1/vista_listajuegos.dart';
 import 'package:flutter_application_1/vista_mostrandobusqueda.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,6 +53,9 @@ class Aplicacion extends StatelessWidget {
           }
           if (estado is MostrarJuegos) {
               return VistaListaJuegos(setJuegos: estado.setJuegos, nombre: estado.nombre);
+          }
+          if (estado is MostrarImagen) {
+            return VistaImagenes(url: estado.url);
           }
           return const Center(child: Text('Si estas viendo esto algo salio mal, HUYE'));
 
