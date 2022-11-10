@@ -59,7 +59,13 @@ class _VistaSolicitandoNombreSTFState extends State<VistaSolicitandoNombreSTF> {
           var bloc = context.read<ClaseBloc>();
           bloc.add(NombreRecibido(controller.text));
           controller.clear();
-        }:null, child: Text('Siguiente'))
+        }:null, child: Text('Siguiente')),
+        TextButton(onPressed: isButtonActive ? (){
+          setState(() => isButtonActive = false,);
+          var bloc = context.read<ClaseBloc>();
+          bloc.add(ImagenRecibida());
+          controller.clear();
+        }:null, child: Text('Ver Imagenes'))
       ],
     );
   }
