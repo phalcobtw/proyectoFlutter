@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter_application_1/caracteristicas/verificacion/vistas/repositorio_imagen.dart';
 import 'package:flutter_application_1/caracteristicas/verificacion/vistas/repositorio_verificacion.dart';
 import 'package:flutter_application_1/dominio/nick_formado.dart';
+import 'package:flutter_application_1/vista_imagenes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'dominio/juego_jugado.dart';
@@ -23,6 +25,7 @@ class JuegosRecibidos extends EventoVerificacion {
 
   JuegosRecibidos(this.nombre);
 }
+class ImagenRecibida extends EventoVerificacion{}
 
 
 
@@ -74,6 +77,9 @@ class MostrarNombreNoConfirmado extends EstadoVerificacion{
     }
   }
 }
+class MostrarImagen extends EstadoVerificacion{
+  String url = "";
+}
 
 //Bloc
 
@@ -86,14 +92,14 @@ class ClaseBloc extends Bloc<EventoVerificacion, EstadoVerificacion> {
       String path = "";
       if (event.nombreAProcesar == 'benthor') {
         try {
-         path = File('./lib/caracteristicas/benthor.txt').readAsStringSync(); 
+         path = File("""./lib/caracteristicas/benthor.txt""").readAsStringSync(); 
         } catch (e) {
           path = "juego1, 1\njuego2, 2";
         }
       }
       if (event.nombreAProcesar == 'fokuleh') {
         try {
-         path = File('./lib/caracteristicas/fokuleh.txt').readAsStringSync(); 
+         path = File("""./lib/caracteristicas/fokuleh.txt""").readAsStringSync(); 
         } catch (e) {
           path = "juego1, 1\njuego2, 2";
         }
@@ -108,6 +114,11 @@ class ClaseBloc extends Bloc<EventoVerificacion, EstadoVerificacion> {
       }
       emit(MostrarJuegos(setJuegos, event.nombreAProcesar));
     }));
+    on<ImagenRecibida>((event, emit) {
+     RepositorioImagenPruebas repositorioImg = RepositorioImagenPruebas();
+     var resultadoImg = repositorioImg.obtenerImagenJuego();
+     resultadoImg.match((l) => null, (r) => emit(MostrarImagen())); 
+    });
   }
 }
 
