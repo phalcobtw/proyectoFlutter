@@ -95,28 +95,6 @@ class RepositorioPruebasVerificacion extends RepositorioVerificacion {
         propuestaNombre: valoresRegistro[3],
         propuestaPais: valoresRegistro[4]));
   }
-/*   Either<Problema, RegistroUsuario> obtenerRegistroUsuarioDesdeXmlPartidas(XmlDocument documento, XmlDocument docpart) {
-    Either<Problema, String> anioRegistrado = obtenerValorCampo(documento, campoAnio);
-    Either<Problema, String> nombre = obtenerValorCampo(documento, campoNombre);
-    Either<Problema, String> pais = obtenerValorCampo(documento, campoPais);
-    Either<Problema, String> estado = obtenerValorCampo(documento, campoEstado);
-    Either<Problema, String> apellidos = obtenerValorCampo(documento, campoApellido);
-    //Either<Problema, List> nombreJ = obtenerValorPartidas(documento, nombreJuego);
-    if ([anioRegistrado, nombre, pais, estado, apellidos].any((element) => element.isLeft())) {
-      return Left(VersionIncorrectaXml());
-    }
-    final valoresRegistro = [anioRegistrado, apellidos, estado, nombre, pais].map((e) => e.getOrElse((l) => '')).toList();
-    if (valoresRegistro[0].isEmpty) {
-      return Left(UsuarioNoRegistrado());
-    }
-    return Right(RegistroUsuario.constructor(
-        propuestaAnio: valoresRegistro[0],
-        propuestaApellidos: valoresRegistro[1],
-        propuestaEstado: valoresRegistro[2],
-        propuestaNombre: valoresRegistro[3],
-        propuestaPais: valoresRegistro[4]));
-  } */
-
   Either<Problema, String> obtenerValorCampo(
       XmlDocument documento, String campo) {
     const campoValor = 'value';
